@@ -58,15 +58,12 @@ function App() {
 				buttonSave="Сохранить"
 				isOpen={isEditProfilePopupOpen}
 				onPopupClose={closeAllPopups}
-				children={(
-					<>
-						<input type="text" name="nameinput" id="name-input" className="popup__text popup__text_type_name" placeholder="Имя" required minLength="2" maxLength="40" />
-						<span className="popup__error name-input-error"></span>
-						<input type="text" name="jobinput" id="job-input" className="popup__text popup__text_type_about" placeholder="Профессиональная деятельность" required minLength="2" maxLength="200" />
-						<span className="popup__error job-input-error"></span>
-					</>
-				)}
-			/>
+			>
+				<input type="text" name="nameinput" id="name-input" className="popup__text popup__text_type_name" placeholder="Имя" required minLength="2" maxLength="40" />
+				<span className="popup__error name-input-error"></span>
+				<input type="text" name="jobinput" id="job-input" className="popup__text popup__text_type_about" placeholder="Профессиональная деятельность" required minLength="2" maxLength="200" />
+				<span className="popup__error job-input-error"></span>
+			</PopupWithForm>
 			
 			{/*попап добавления нового места*/}
 			<PopupWithForm 
@@ -75,15 +72,12 @@ function App() {
 				buttonSave="Создать"
 				isOpen={isAddPlacePopupOpen}
 				onPopupClose={closeAllPopups}
-				children={(
-					<>
-						<input type="text" name="titleinput" id="title-input" className="popup__text popup__text_type_name" placeholder="Название" required minLength="2" maxLength="30" />
-						<span className="popup__error title-input-error"></span>
-						<input type="url" name="urlinput" id="url-input" className="popup__text popup__text_type_about" placeholder="Ссылка на картинку" required />
-						<span className="popup__error url-input-error"></span>
-					</>
-				)}
-			/>
+			>	
+				<input type="text" name="titleinput" id="title-input" className="popup__text popup__text_type_name" placeholder="Название" required minLength="2" maxLength="30" />
+				<span className="popup__error title-input-error"></span>
+				<input type="url" name="urlinput" id="url-input" className="popup__text popup__text_type_about" placeholder="Ссылка на картинку" required />
+				<span className="popup__error url-input-error"></span>
+			</PopupWithForm>
 			
 			{/*попап обновления аватара*/}
 			<PopupWithForm 
@@ -92,30 +86,25 @@ function App() {
 				buttonSave="Сохранить"
 				isOpen={isEditAvatarPopupOpen}
 				onPopupClose={closeAllPopups}
-				children={(
-					<>
-						<input type="url" name="urlavatarinput" id="url-avatar-input" className="popup__text popup__text_type_about" placeholder="Ссылка на аватар" required />
-						<span className="popup__error url-avatar-input-error"></span>
-					</>
-				)}
-			/>
+			>	
+				<input type="url" name="urlavatarinput" id="url-avatar-input" className="popup__text popup__text_type_about" placeholder="Ссылка на аватар" required />
+				<span className="popup__error url-avatar-input-error"></span>
+			</PopupWithForm>
 			
 			{/*попап перед удалением карточки*/}
 			<PopupWithForm 
 				title="Вы уверены?" 
 				name="confirm"
 				buttonSave="Да"
-				children={(
-					<>
-					</>
-				)}
-			/>
+			>
+			</PopupWithForm>
 			
 			{/*попап с картинкой*/}
 			<ImagePopup 
 				card={selectedCard}
 				onPopupClose={closeAllPopups}
-			/>
+			>
+			</ImagePopup>
 			
 		</div>
 	);

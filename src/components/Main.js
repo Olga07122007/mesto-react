@@ -15,18 +15,20 @@ function Main(props) {
 				setUserName(userData.name);
 				setUserDescription(userData.about);
 				setUserAvatar(userData.avatar);
-				document.querySelector('.profile__avatar').style.backgroundImage = `url(${userAvatar})`;
 				setCards(cards);
+				
 			})
 			.catch(err => {
 				console.log(`Ошибка: ${err}`);
 			}); 	
-	}, []) 
-		
+	}, [])
+	
+	const imageStyle = { backgroundImage: `url(${userAvatar})` };
+
 	return (
 		<main className="main">
 			<section className="profile">
-				<div className="profile__avatar" onClick={props.onEditAvatar}></div>
+				<div className="profile__avatar"  style={imageStyle}  onClick={props.onEditAvatar}></div>
 				<div className="profile__info">
 					<div className="profile__title-container">
 						<h1 className="profile__title">{userName}</h1>
