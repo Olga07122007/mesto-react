@@ -1,21 +1,48 @@
 import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Card(props) {
+function Card({ card, onCardClick, onCardLike, onConfirm }) {
+	//подписка
+	const currentUser = React.useContext(CurrentUserContext);
+	
+	//определяем добавлена ли карточка текущим пользователем
+	const isOwn = card.owner._id === currentUser._id;
+	const cardDeleteButtonClassName = (
+		`element__delete ${isOwn ? 'element__delete_visible' : ''}`
+	); 
+	
+	//определяем есть ли на карточке лайк текущего пользователя
+	const isLiked = card.likes.some(i => i._id === currentUser._id);
+	const cardLikeButtonClassName = (
+		`element__like ${isLiked ? 'element__like_active' : ''}`
+	);  
+	
+	//клик по картинке
 	function handleCardClick() {
-		props.onCardClick(props.card);
+		onCardClick(card);
+	}
+	
+	//открытие попапа перед удалением карточки
+	function handleConfirmClick() {
+		onConfirm(card);
+	}
+	
+	//поставить лайк
+	function handleLikeClick() {
+		onCardLike(card);
 	}
 	
 	return(
 		<article className="element">
-			<img className="element__image" src={props.card.link} alt={props.card.name} onClick={handleCardClick}/>
+			<img className="element__image" src={card.link} alt={card.name} onClick={handleCardClick}/>
 			<div className="element__title-container">
-				<h2 className="element__title">{props.card.name}</h2>
+				<h2 className="element__title">{card.name}</h2>
 				<div className="element__like-container">
-					<button type="button" className="element__like"></button>
-					<p className="element__counter">{props.card.likes.length}</p>
+					<button type="button" className={cardLikeButtonClassName} onClick={handleLikeClick}></button>
+					<p className="element__counter">{card.likes.length}</p>
 				</div>
 			</div>
-			<button type="button" className="element__delete "></button>
+			<button type="button" className={cardDeleteButtonClassName} onClick={handleConfirmClick}></button>
 		</article>
 	)
 }

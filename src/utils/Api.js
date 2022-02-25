@@ -90,17 +90,17 @@ class Api {
 				'Content-Type': this._headers['Content-Type']
 			},
 			body: JSON.stringify({
-				name: data.nameinput,
-				about: data.jobinput
+				name: data.name,
+				about: data.about
 			})
 		})
 		.then (onError);	
 	};
 	
-	//добавление лайка
-	addLike(likeId) {
+	//добавление и удаление лайка
+	changeLikeCardStatus(likeId, isLiked) {
 		return fetch(`${this._baseUrl}/cards/${likeId}/likes`, {
-			method: 'PUT',
+		method: !isLiked ? 'PUT' : 'DELETE',
 			headers: {
 				authorization: this._headers.authorization,
 				'Content-Type': this._headers['Content-Type']
@@ -108,18 +108,6 @@ class Api {
 		})
 		.then (onError);
 	}
-	
-	//удаление лайка
-	deleteLike(likeId) {
-		return fetch(`${this._baseUrl}/cards/${likeId}/likes`, {
-			method: 'DELETE',
-			headers: {
-				authorization: this._headers.authorization,
-				'Content-Type': this._headers['Content-Type']
-			},
-		})
-		.then (onError);	
-	};
 }
 
 //создание экземпляра класса api

@@ -1,42 +1,26 @@
 import React from 'react';
 import api from '../utils/Api';
-import Card from './Card'
+import Card from './Card';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main(props) {
-	const [userName, setUserName] = React.useState('');
-	const [userDescription, setUserDescription] = React.useState('');
-	const [userAvatar, setUserAvatar] = React.useState('');
-	const [cards, setCards] = React.useState([]);
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, cards, onConfirm }) {
+	//пописка
+	const currentUser = React.useContext(CurrentUserContext);
+	//аватар
+	const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
 	
-	{/*Получение информации от сервера*/}
-	React.useEffect(() => {
-		api.getAppInfo()
-			.then(([userData, cards]) => {
-				setUserName(userData.name);
-				setUserDescription(userData.about);
-				setUserAvatar(userData.avatar);
-				setCards(cards);
-				
-			})
-			.catch(err => {
-				console.log(`Ошибка: ${err}`);
-			}); 	
-	}, [])
-	
-	const imageStyle = { backgroundImage: `url(${userAvatar})` };
-
 	return (
 		<main className="main">
 			<section className="profile">
-				<div className="profile__avatar"  style={imageStyle}  onClick={props.onEditAvatar}></div>
+				<div className="profile__avatar"  style={imageStyle}  onClick={onEditAvatar}></div>
 				<div className="profile__info">
 					<div className="profile__title-container">
-						<h1 className="profile__title">{userName}</h1>
-						<button type="button" className="profile__edit-button" onClick={props.onEditProfile}></button>
+						<h1 className="profile__title">{currentUser.name}</h1>
+						<button type="button" className="profile__edit-button" onClick={onEditProfile}></button>
 					</div>
-					<p className="profile__subtitle">{userDescription}</p>
+					<p className="profile__subtitle">{currentUser.about}</p>
 				</div>
-				<button type="button" className="profile__add-button" onClick={props.onAddPlace}></button>
+				<button type="button" className="profile__add-button" onClick={onAddPlace}></button>
 			</section>
 			
 			{/*Создание карточек*/}
@@ -45,7 +29,9 @@ function Main(props) {
 					<Card
 						key={card._id}
 						card={card}
-						onCardClick={props.onCardClick}
+						onCardClick={onCardClick}
+						onCardLike={onCardLike}
+						onConfirm={onConfirm}
 					/>
 				))}
 			</section>
