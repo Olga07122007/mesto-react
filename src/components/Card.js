@@ -1,10 +1,9 @@
-import React from 'react';
+import { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Card({ card, onCardClick, onCardLike, onConfirm }) {
 	//подписка
-	const currentUser = React.useContext(CurrentUserContext);
-	
+	const currentUser = useContext(CurrentUserContext);
 	//определяем добавлена ли карточка текущим пользователем
 	const isOwn = card.owner._id === currentUser._id;
 	const cardDeleteButtonClassName = (

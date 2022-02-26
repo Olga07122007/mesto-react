@@ -1,22 +1,19 @@
-import React from 'react';
 import PopupWithForm from './PopupWithForm';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function EditProfilePopup({ isOpen, onPopupClose, onUpdateUser, isLoading }) {
 	//подписка
-	const currentUser = React.useContext(CurrentUserContext);
+	const currentUser = useContext(CurrentUserContext);
 	//переменные состояния имени и профессии
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	
 	//запись значений в инпуты
-	React.useEffect(() => {
-		if(currentUser){
-			setName(currentUser.name);
-			setDescription(currentUser.about);
-		}	
-	}, [currentUser]);
+	useEffect(() => {
+		setName(currentUser.name);
+		setDescription(currentUser.about);
+	}, [currentUser, isOpen]);
 	
 	function handleChangeName(e) {
     setName(e.target.value);
@@ -45,9 +42,9 @@ function EditProfilePopup({ isOpen, onPopupClose, onUpdateUser, isLoading }) {
 			onSubmit={handleSubmit}
 			isLoading={isLoading}
 		>
-			<input type="text" value={name} onChange={handleChangeName} name="nameinput" id="name-input" className="popup__text popup__text_type_name" placeholder="Имя" required minLength="2" maxLength="40" />
+			<input type="text" value={name||''} onChange={handleChangeName} name="nameinput" id="name-input" className="popup__text popup__text_type_name" placeholder="Имя" required minLength="2" maxLength="40" />
 			<span className="popup__error name-input-error"></span>
-			<input type="text" value={description} onChange={handleChangeAbout} name="jobinput" id="job-input" className="popup__text popup__text_type_about" placeholder="Профессиональная деятельность" required minLength="2" maxLength="200" />
+			<input type="text" value={description||''} onChange={handleChangeAbout} name="jobinput" id="job-input" className="popup__text popup__text_type_about" placeholder="Профессиональная деятельность" required minLength="2" maxLength="200" />
 			<span className="popup__error job-input-error"></span>
 		</PopupWithForm>
 	);

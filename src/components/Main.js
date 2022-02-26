@@ -1,11 +1,10 @@
-import React from 'react';
-import api from '../utils/Api';
+import { useContext } from 'react';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, cards, onConfirm }) {
 	//пописка
-	const currentUser = React.useContext(CurrentUserContext);
+	const currentUser = useContext(CurrentUserContext);
 	//аватар
 	const imageStyle = { backgroundImage: `url(${currentUser.avatar})` };
 	

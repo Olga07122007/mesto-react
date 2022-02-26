@@ -1,8 +1,6 @@
-import React from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function ConfirmPopup({ isOpen, onPopupClose, card, onCardDelete }) {
-	
 	//удаление карточки
 	function handleSubmit(e) {
 		e.preventDefault();

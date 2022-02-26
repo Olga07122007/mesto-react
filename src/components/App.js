@@ -1,14 +1,12 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from './EditProfilePopup'
 import EditAvatarPopup from './EditAvatarPopup'
 import AddPlacePopup from './AddPlacePopup'
 import ConfirmPopup from './ConfirmPopup'
 import ImagePopup from './ImagePopup';
-import { useState } from 'react';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
@@ -21,7 +19,7 @@ function App() {
 	//для ImagePopup
 	const [selectedCard, setSelectedCard] = useState(null);
 	//данные пользователя
-	const [currentUser, setCurrentUser] = useState('');
+	const [currentUser, setCurrentUser] = useState({});
 	//переменная состояния для массива с карточками
 	const [cards, setCards] = useState([]);
 	//кнопка сохранения при загрузке данных на сервер
@@ -30,7 +28,7 @@ function App() {
 	const [selectedCardDelete, setSelectedCardDelete] = useState(null);
 	
 	//отображение начального профиля и загрузка элементов на страницу
-	React.useEffect(() => {
+	useEffect(() => {
 		api.getAppInfo()
 			.then(([userData, cards]) => {
 				setCurrentUser(userData);
