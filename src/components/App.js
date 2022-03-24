@@ -12,7 +12,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
 	//переменные состояния, отвечающие за видимость попапов
-	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+	const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);;
 	const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
 	const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 	const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
@@ -26,6 +26,8 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	//карточка для удаления
 	const [selectedCardDelete, setSelectedCardDelete] = useState(null);
+	//кнопка формы во время валидации
+	const [validationButton, setValidationButton] = useState(true);
 	
 	//отображение начального профиля и загрузка элементов на страницу
 	useEffect(() => {
@@ -38,6 +40,14 @@ function App() {
 				console.log(`Ошибка: ${err}`);
 			}); 	
 	}, [])
+	
+	//изменение кнопки отправки формы при валидации
+	function setButtonStatus(array) {
+		const isValid = array.some((item) => {
+			return item === false;
+		})
+		setValidationButton(!isValid);
+	}
 	
 	//функция открытия попапа редактирования профиля
 	function handleEditProfileClick() {
@@ -171,7 +181,9 @@ function App() {
 					isOpen={isEditProfilePopupOpen} 
 					onPopupClose={closeAllPopups}
 					onUpdateUser={handleUpdateUser}
-					isLoading={isLoading}	
+					isLoading={isLoading}
+					validationButton={validationButton}	
+					setButtonStatus={setButtonStatus}	
 				/>
 				
 				{/*попап добавления нового места*/}
@@ -180,6 +192,8 @@ function App() {
 					onPopupClose={closeAllPopups}
 					onAddCard={handleAddPlaceSubmit}
 					isLoading={isLoading}
+					validationButton={validationButton}	
+					setButtonStatus={setButtonStatus}	
 				/>
 				
 				{/*попап обновления аватара*/}
@@ -187,7 +201,9 @@ function App() {
 					isOpen={isEditAvatarPopupOpen} 
 					onPopupClose={closeAllPopups}
 					onUpdateAvatar={handleUpdateAvatar}
-					isLoading={isLoading}	
+					isLoading={isLoading}
+					validationButton={validationButton}	
+					setButtonStatus={setButtonStatus}		
 				/> 
 				
 				{/*попап перед удалением карточки*/}
@@ -196,6 +212,8 @@ function App() {
 					onPopupClose={closeAllPopups}
 					card={selectedCardDelete}
 					onCardDelete={handleCardDelete}
+					validationButton={validationButton}	
+					setButtonStatus={setButtonStatus}	
 				/>
 				
 				{/*попап с картинкой*/}

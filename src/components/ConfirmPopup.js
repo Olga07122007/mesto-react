@@ -1,11 +1,17 @@
 import PopupWithForm from './PopupWithForm';
+import { useEffect } from 'react';
 
-function ConfirmPopup({ isOpen, onPopupClose, card, onCardDelete }) {
+function ConfirmPopup({ isOpen, onPopupClose, card, onCardDelete, validationButton, setButtonStatus }) {
 	//удаление карточки
 	function handleSubmit(e) {
 		e.preventDefault();
 		onCardDelete(card);
-	} 
+	}
+		
+	//валидация кнопки отправки формы
+	useEffect(() => {
+		setButtonStatus([true]);
+	}, [isOpen]);	
 	
 	return (
 		<PopupWithForm 
@@ -15,6 +21,7 @@ function ConfirmPopup({ isOpen, onPopupClose, card, onCardDelete }) {
 			isOpen={isOpen}
 			onPopupClose={onPopupClose}
 			onSubmit={handleSubmit}
+			validationButton={validationButton}
 		>
 		</PopupWithForm>
 	);
