@@ -11,11 +11,12 @@ function EditAvatarPopup({ isOpen, onPopupClose, onUpdateAvatar, isLoading, vali
 	//валидация кнопки отправки формы
 	useEffect(() => {
 		setButtonStatus([validationUrl]);
-	}, [validationUrl, isOpen]);
+	}, [validationUrl]);
 	
 	//при открытии попапа
 	useEffect(() => {
-		setValidationUrl(false);
+		setValidationUrl(true);
+		setButtonStatus([false]);
 		inputRef.current.value='';
 	}, [isOpen]);
 	
@@ -30,6 +31,7 @@ function EditAvatarPopup({ isOpen, onPopupClose, onUpdateAvatar, isLoading, vali
 	function setValidation() {
 		setValMessageUrl(inputRef.current.validationMessage);
 		inputRef.current.validity.valid ? setValidationUrl(true) : setValidationUrl(false);
+		setButtonStatus([validationUrl]);
 	}
 	
 	return (
@@ -43,7 +45,7 @@ function EditAvatarPopup({ isOpen, onPopupClose, onUpdateAvatar, isLoading, vali
 			isLoading={isLoading}
 			validationButton={validationButton}
 		>	
-			<input ref={inputRef} onInput={setValidation} type="url" name="urlavatarinput" id="url-avatar-input" className="popup__text popup__text_type_about" placeholder="Ссылка на аватар" required />
+			<input ref={inputRef} onChange={setValidation} type="url" name="urlavatarinput" id="url-avatar-input" className="popup__text popup__text_type_about" placeholder="Ссылка на аватар" required />
 			<span className={`popup__error url-avatar-input-error ${!validationUrl ? 'popup__error_active' : ''}`}>{valMessageUrl}</span>
 		</PopupWithForm>
 	);

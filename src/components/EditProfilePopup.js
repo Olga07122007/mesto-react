@@ -20,6 +20,12 @@ function EditProfilePopup({ isOpen, onPopupClose, onUpdateUser, isLoading, valid
 		setDescription(currentUser.about);
 	}, [currentUser, isOpen]);
 	
+	//при открытии попапа
+	useEffect(() => {
+		setValidationName(true);
+		setValidationAbout(true);
+	}, [isOpen]);
+	
 	//валидация кнопки отправки формы
 	useEffect(() => {
 		setButtonStatus([validationName, validationAbout]);

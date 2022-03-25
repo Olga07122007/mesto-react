@@ -14,12 +14,14 @@ function AddPlacePopup({ isOpen, onPopupClose, onAddCard, isLoading, validationB
 	//валидация кнопки отправки формы
 	useEffect(() => {
 		setButtonStatus([validationTitle, validationUrl]);
-	}, [validationTitle, validationUrl, isOpen]);
+	}, [validationTitle, validationUrl]);
 	
 	//при открытии попапа
 	useEffect(() => {
 		setValidationTitle(false);
 		setValidationUrl(false);
+		setValMessageTitle('');
+		setValMessageUrl('');
 		setTitle('');
 		setUrl('');
 	}, [isOpen]);
@@ -35,7 +37,7 @@ function AddPlacePopup({ isOpen, onPopupClose, onAddCard, isLoading, validationB
     setUrl(e.target.value);
 		setValMessageUrl(e.target.validationMessage);
 		e.target.validity.valid ? setValidationUrl(true) : setValidationUrl(false);
-  }
+	}
 	
 	//добавление новой карточки
 	function handleSubmit(e) {
